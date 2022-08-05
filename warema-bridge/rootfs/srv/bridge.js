@@ -133,7 +133,7 @@ function registerDevice(element) {
 function registerDevices() {
   if (forceDevices && forceDevices.length) {
     forceDevices.forEach(element => {
-      registerDevice({snr: element, type: 25})
+      registerDevice({snr: element, type: 20})
     })
   } else {
     console.log('Scanning...')
