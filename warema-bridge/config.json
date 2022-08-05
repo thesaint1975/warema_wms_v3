@@ -5,10 +5,10 @@
   "description": "Control my Warema WMS system",
   "arch": ["aarch64", "amd64", "armv7", "i386"],
   "startup": "services",
-  "url": "https://github.com/giannello/addon-warema-bridge",
+  "url": "https://github.com/thauer/addon-warema-bridge",
   "boot": "auto",
   "hassio_api": true,
-  "image": "giannello/addon-warema-bridge",
+  "image": "thauer/addon-warema-bridge",
   "options": {
     "wms_serial_port": null
   },
