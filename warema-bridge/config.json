@@ -1,8 +1,8 @@
 {
-  "name": "Warema Bridge",
+  "name": "Tamás' Warema Bridge",
   "version": "dev",
   "slug": "warema-bridge",
-  "description": "Control your Warema WMS system",
+  "description": "Control my Warema WMS system",
   "arch": ["aarch64", "amd64", "armv7", "i386"],
   "startup": "services",
   "url": "https://github.com/giannello/addon-warema-bridge",
