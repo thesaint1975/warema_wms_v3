@@ -256,10 +256,10 @@ client.on('message', function (topic, message) {
       case 'set':
         switch (message.toString()) {
           case 'CLOSE':
-            stickUsb.vnBlindSetPosition(device, 100)
+            stickUsb.vnBlindSetPosition(device, 100, 0)
             break;
           case 'OPEN':
-            stickUsb.vnBlindSetPosition(device, 0)
+            stickUsb.vnBlindSetPosition(device, 0, -100)
             break;
           case 'STOP':
             stickUsb.vnBlindStop(device)
