@@ -70,8 +70,8 @@ function registerDevice(element) {
         tilt_status_topic: 'warema/' + element.snr + '/tilt',
         set_position_topic: 'warema/' + element.snr + '/set_position',
         tilt_command_topic: 'warema/' + element.snr + '/set_tilt',
-        tilt_closed_value: -100,
-        tilt_opened_value: 100,
+        tilt_closed_value: 100,
+        tilt_opened_value: -100,
         tilt_min: -100,
         tilt_max: 100,
       }
@@ -135,6 +135,8 @@ function registerDevices() {
     forceDevices.forEach(element => {
       registerDevice({snr: element, type: 20})
     })
+    registerDevice({snr: 1247705, type: 25});
+    registerDevice({snr: 1247909, type: 25});
   } else {
     console.log('Scanning...')
     stickUsb.scanDevices({autoAssignBlinds: false});
@@ -150,12 +152,14 @@ function callback(err, msg) {
       case 'wms-vb-init-completion':
         console.log('Warema init completed')
         registerDevices()
-        stickUsb.setPosUpdInterval(30000);
+        stickUsb.setPosUpdInterval(20000);
         break
       case 'wms-vb-rcv-weather-broadcast':
         if (registered_shades.includes(msg.payload.weather.snr)) {
           client.publish('warema/' + msg.payload.weather.snr + '/illuminance/state', msg.payload.weather.lumen.toString())
           client.publish('warema/' + msg.payload.weather.snr + '/temperature/state', msg.payload.weather.temp.toString())
+	  client.publish('warema/' + msg.payload.weather.snr + '/wind/state', msg.payload.weather.wind.toString())
+	  client.publish('warema/' + msg.payload.weather.snr + '/rain/state', msg.payload.weather.rain.toString())
         } else {
           var availability_topic = 'warema/' + msg.payload.weather.snr + '/availability'
           var payload = {
@@ -191,6 +195,20 @@ function callback(err, msg) {
           }
           client.publish('homeassistant/sensor/' + msg.payload.weather.snr + '/temperature/config', JSON.stringify(temperature_payload))
 
+	  var wind_payload = {
+	    ...payload,
+	    state_topic: 'warema/' + msg.payload.weather.snr + '/wind/state',
+	    unique_id: msg.payload.weather.snr + '_wind',
+	  }
+	  client.publish('homeassistant/sensor/' + msg.payload.weather.snr + '/wind/config', JSON.stringify(wind_payload))
+
+	  var rain_payload = {
+	    ...payload,
+	    state_topic: 'warema/' + msg.payload.weather.snr + '/rain/state',
+	    unique_id: msg.payload.weather.snr + '_rain',
+	  }
+	  client.publish('homeassistant/sensor/' + msg.payload.weather.snr + '/rain/config', JSON.stringify(rain_payload))
+	  
           client.publish(availability_topic, 'online', {retain: true})
           registered_shades += msg.payload.weather.snr
         }
