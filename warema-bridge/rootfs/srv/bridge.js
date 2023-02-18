@@ -1,4 +1,4 @@
-const warema = require('warema-wms-venetian-blinds');
+const warema = require('warema-wms-api');
 var mqtt = require('mqtt')
 
 process.on('SIGINT', function() {
@@ -152,7 +152,7 @@ function callback(err, msg) {
       case 'wms-vb-init-completion':
         console.log('Warema init completed')
         registerDevices()
-        stickUsb.setPosUpdInterval(20000);
+        stickUsb.setPosUpdInterval(30000);
         break
       case 'wms-vb-rcv-weather-broadcast':
         if (registered_shades.includes(msg.payload.weather.snr)) {
@@ -265,11 +265,21 @@ client.on('error', function (error) {
 })
 
 client.on('message', function (topic, message) {
-  // console.log(topic + ':' + message.toString())
+//  console.log(topic + ':' + message.toString())
   var scope = topic.split('/')[0]
   if (scope == 'warema') {
     var device = parseInt(topic.split('/')[1])
     var command = topic.split('/')[2]
+    switch (command) {
+      case 'rain':
+      case 'wind':
+      case 'temperature':
+      case 'illuminance':
+	break
+      default:
+	console.log(topic + ':' + message.toString());
+	console.log('device: ' + device + ' === command: ' + command);
+    }
     switch (command) {
       case 'set':
         switch (message.toString()) {
