@@ -8,6 +8,7 @@ process.on('SIGINT', function() {
 
 const ignoredDevices = process.env.IGNORED_DEVICES ? process.env.IGNORED_DEVICES.split(',') : []
 const forceDevices = process.env.FORCE_DEVICES ? process.env.FORCE_DEVICES.split(',') : []
+const knownDevices = process.env.KNOWN_DEVICES ? process.env.KNOWN_DEVICES.split(',') : []
 
 const settingsPar = {
     wmsChannel   : process.env.WMS_CHANNEL     || 17,
@@ -21,6 +22,9 @@ var shade_position = []
 
 function registerDevice(element) {
   console.log('Registering ' + element.snr)
+  if(element.name == undefined) {
+	  element.name=element.snr.toString()
+  }
   var topic = 'homeassistant/cover/' + element.snr + '/' + element.snr + '/config'
   var availability_topic = 'warema/' + element.snr + '/availability'
 
@@ -123,7 +127,7 @@ function registerDevice(element) {
   } else {
     console.log('Adding device ' + element.snr + ' (type ' + element.type + ')')
 
-    stickUsb.vnBlindAdd(parseInt(element.snr), element.snr.toString());
+    stickUsb.vnBlindAdd(parseInt(element.snr), element.name);
     registered_shades += element.snr
     client.publish(availability_topic, 'online', {retain: true})
   }
@@ -131,12 +135,25 @@ function registerDevice(element) {
 }
 
 function registerDevices() {
+  registerDevice({snr: 1190504, name:"East1"  , type:20 })
+  registerDevice({snr: 1190503, name:"East2"  , type:20 })
+  registerDevice({snr: 1260229, name:"South1" , type:20 })
+  registerDevice({snr: 1259963, name:"South2" , type:20 })
+  registerDevice({snr: 1268208, name:"South3" , type:20 })
+  registerDevice({snr:  883045, name:"South4" , type:20 })
+  registerDevice({snr: 1190454, name:"Balcon1", type:20 })
+  registerDevice({snr: 1190496, name:"Balcon2", type:20 })
+  registerDevice({snr: 1259545, name:"Kitchen", type:20 })
+  registerDevice({snr: 1190506, name:"Bedroom", type:20 })
+  registerDevice({snr: 1187205, name:"Lilla"  , type:20 })
+  registerDevice({snr: 1260043, name:"Ben"    , type:20 })
+  registerDevice({snr: 1247705, name:"Awning" , type:25 })
+  registerDevice({snr: 1247909, name:"AwningW", type:25 })
+  return;
   if (forceDevices && forceDevices.length) {
     forceDevices.forEach(element => {
-      registerDevice({snr: element, type: 20})
+      registerDevice({snr: element, type: 25})
     })
-    registerDevice({snr: 1247705, type: 25});
-    registerDevice({snr: 1247909, type: 25});
   } else {
     console.log('Scanning...')
     stickUsb.scanDevices({autoAssignBlinds: false});
