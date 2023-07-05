@@ -135,20 +135,8 @@ function registerDevice(element) {
 }
 
 function registerDevices() {
-  registerDevice({snr: 1190504, name:"East1"  , type:20 })
-  registerDevice({snr: 1190503, name:"East2"  , type:20 })
-  registerDevice({snr: 1260229, name:"South1" , type:20 })
-  registerDevice({snr: 1259963, name:"South2" , type:20 })
-  registerDevice({snr: 1268208, name:"South3" , type:20 })
-  registerDevice({snr:  883045, name:"South4" , type:20 })
-  registerDevice({snr: 1190454, name:"Balcon1", type:20 })
-  registerDevice({snr: 1190496, name:"Balcon2", type:20 })
-  registerDevice({snr: 1259545, name:"Kitchen", type:20 })
-  registerDevice({snr: 1190506, name:"Bedroom", type:20 })
-  registerDevice({snr: 1187205, name:"Lilla"  , type:20 })
-  registerDevice({snr: 1260043, name:"Ben"    , type:20 })
-  registerDevice({snr: 1247705, name:"Awning" , type:25 })
-  registerDevice({snr: 1247909, name:"AwningW", type:25 })
+  registerDevice({snr: 00994624, name:"Markise"  , type:25 })
+  registerDevice({snr: 01140790, name:"AwningW", type:20})
   return;
   if (forceDevices && forceDevices.length) {
     forceDevices.forEach(element => {
