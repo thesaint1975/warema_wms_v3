@@ -207,7 +207,7 @@ function callback(err, msg) {
 	    ...payload,
 	    state_topic: 'warema/' + msg.payload.weather.snr + '/wind/state',
 	    unique_id: msg.payload.weather.snr + '_wind',
-	    unit_of_measurement: 'm/S,
+	    unit_of_measurement: 'm/S',
 	  }
 	  client.publish('homeassistant/sensor/' + msg.payload.weather.snr + '/wind/config', JSON.stringify(wind_payload))
 
