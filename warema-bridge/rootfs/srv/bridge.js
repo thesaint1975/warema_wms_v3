@@ -136,8 +136,8 @@ function registerDevice(element) {
 
 function registerDevices() {
   registerDevice({snr: 00994624, name:"Markise"  , type:25 })
-  registerDevice({snr: 01140790, name:"PowerPlug1", type:21})
-  registerDevice({snr: 01399553, name:"PowerPlug2", type:21})
+  registerDevice({snr: 01140790, name:"PowerPlug1", type:07})
+  registerDevice({snr: 01399553, name:"PowerPlug2", type:07})
   registerDevice({snr: 01185462, name:"Handsender", type:07})
 
   return;
@@ -207,6 +207,7 @@ function callback(err, msg) {
 	    ...payload,
 	    state_topic: 'warema/' + msg.payload.weather.snr + '/wind/state',
 	    unique_id: msg.payload.weather.snr + '_wind',
+	    unit_of_measurement: 'm/S,
 	  }
 	  client.publish('homeassistant/sensor/' + msg.payload.weather.snr + '/wind/config', JSON.stringify(wind_payload))
 
