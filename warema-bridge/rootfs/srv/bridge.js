@@ -136,9 +136,9 @@ function registerDevice(element) {
 
 function registerDevices() {
   registerDevice({snr: 00994624, name:"Markise"  , type:25 })
-  registerDevice({snr: 01140790, name:"PowerPlug1", type:07})
-  registerDevice({snr: 01399553, name:"PowerPlug2", type:07})
-  registerDevice({snr: 01185462, name:"Handsender", type:07})
+  registerDevice({snr: 01140790, name:"PowerPlug1", type:25})
+  registerDevice({snr: 01399553, name:"PowerPlug2", type:25})
+  #registerDevice({snr: 01185462, name:"Handsender", type:07})
 
   return;
   if (forceDevices && forceDevices.length) {
