@@ -29,7 +29,7 @@ function registerDevice(element) {
   var availability_topic = 'warema/' + element.snr + '/availability'
 
   var base_payload = {
-    name: element.snr,
+   
     availability: [
       {topic: 'warema/bridge/state'},
       {topic: availability_topic}
